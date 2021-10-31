@@ -5,12 +5,11 @@ import Modal from "react-modal";
 import PulseLoader from "react-spinners/PulseLoader";
 
 function Home() {
-  // <img alt="pokemon" src={`https://img.pokemondb.net/artwork/large/${props.pokemon.name}.jpg`}/>
 
   const [data, setData] = useState();
   const [pokeData, setPokeData] = useState(null);
   const [modalIsOpen, setIsOpen] = useState(false);
-
+  const [generation, setGeneration] = useState('1');
 
   function fetchCurrentPokemon(pokemon) {
     fetch(pokemon.url)
@@ -28,6 +27,11 @@ function Home() {
     setIsOpen(false);
   }
 
+  function changeGeneration(e) {
+    setData(null);
+    setGeneration(e.target.value)
+  }
+
   const customStyles = {
     content: {
       top: "10%",
@@ -38,21 +42,53 @@ function Home() {
   };
 
   useEffect(() => {
-    fetch("https://pokeapi.co/api/v2/pokemon?limit=151")
+    if(generation === "1") {
+      fetch("https://pokeapi.co/api/v2/pokemon?limit=151")
       .then((response) => response.json())
-      .then((data) => setData(data.results))
+      .then((data) => setData(data.results.slice(1, 151)))
       .catch((error) => console.log("Error", error));
-  }, []);
+    } else if(generation === "2"){
+      fetch("https://pokeapi.co/api/v2/pokemon?limit=251")
+      .then((response) => response.json())
+      .then((data) => setData(data.results.slice(152, 251)))
+      .catch((error) => console.log("Error", error));
+    } else if (generation === "3"){
+      fetch("https://pokeapi.co/api/v2/pokemon?limit=386")
+      .then((response) => response.json())
+      .then((data) => setData(data.results.slice(252, 386)))
+      .catch((error) => console.log("Error", error));
+    } else if (generation === "4"){
+      fetch("https://pokeapi.co/api/v2/pokemon?limit=493")
+      .then((response) => response.json())
+      .then((data) => setData(data.results.slice(387, 493)))
+      .catch((error) => console.log("Error", error));
+    } else if (generation === "5"){
+      fetch("https://pokeapi.co/api/v2/pokemon?limit=649")
+      .then((response) => response.json())
+      .then((data) => setData(data.results.slice(494, 649)))
+      .catch((error) => console.log("Error", error));
+    }
+  }, [generation]);
+
 
   return (
     <div className="py-16 text-center">
-      <h1 className="mb-16 text-7xl tracking-widest font-semibold text-yellow">
+      <h1 className="mb-16 text-6xl md:text-7xl tracking-widest font-semibold text-yellow">
         Pokedex
       </h1>
-      <p className="mb-16 text-2xl font-semibold text-green">
+      <div>
+        <select name="generation" className="p-3 mb-8" onChange={changeGeneration}>
+          <option name="1" value='1'>Generation 1</option>
+          <option name="2" value='2'>Generation 2</option>
+          <option name="3" value='3'>Generation 3</option>
+          <option name="4" value='4'>Generation 4</option>
+          <option name="5" value='5'>Generation 5</option>
+        </select>
+      </div>
+      <p className="mb-16 text-1xl md:text-2xl font-semibold text-green">
         Click on a Pokemon to see details
       </p>
-      <div className="grid grid-cols-5 gap-10 w-9/12 m-auto">
+      <div className={data ? "grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2 md:gap-6 w-11/12 md:w-9/12 m-auto" : "grid"}>
         {data
           ? data.map((pokemon, i) => {
               return (
@@ -65,7 +101,7 @@ function Home() {
                 />
               );
             })
-          : <PulseLoader /> }
+          : <PulseLoader margin={'9'} color={'white'} /> }
         <Modal
           isOpen={modalIsOpen}
           onRequestClose={closeModal}
@@ -81,7 +117,7 @@ function Home() {
           stats={pokeData.stats}
           types={pokeData.types}
           closeModal={closeModal} />
-        : <PulseLoader />
+        : <div className="grid w-full place-items-center"><PulseLoader /></div>
         }
         </Modal>
       </div>

@@ -68,23 +68,24 @@ function ModalInfo(props) {
     <div className="grid justify-items-stretch text-center">
       <button
         onClick={props.closeModal}
-        className="bg-red text-white justify-self-end w-8 h-8 rounded-full"
+        className="bg-red text-white justify-self-end w-8 h-8 rounded-full grid text-center place-items-center"
       >
         <FontAwesomeIcon icon={faTimes} />
       </button>
-      <h1 className="font-extrabold text-5xl mb-10">
+      <h1 className="font-extrabold text-3xl md:text-5xl mb-10 mt-4 md:mt-0">
         <span className="text-blue-dark">{`#${props.id} `}</span>
         <span className="text-blue">{props.name}</span>
       </h1>
-      <div className="flex">
-        <div className="w-2/5 px-10">
+      <div className="lg:flex">
+        <div className="lg:w-2/5 px-10 mb-10">
           <img
             src={props.image}
             alt={props.name}
-            className="h-72 m-auto mb-6"
+            className="md:h-72 m-auto mb-6"
           />
         </div>
-        <div className="w-3/5">
+        <div className="lg:w-3/5">
+          <div className={`grid grid-cols-${props.types.length === 1 ? '1' : '2'} gap-1 place-items-center lg:flex lg:justify-start`}>
           {props.types.map((item, i) => {
             return (
               <div
@@ -95,47 +96,48 @@ function ModalInfo(props) {
               </div>
             );
           })}
+          </div>
           <div className="grid place-content-center mt-10">
             <h3 className="text-dark-blue font-bold text-2xl mb-6">
               Base Stats
             </h3>
-            <div className="flex">
-              <div className="flex-initial grid place-content-center border-2 border-grey rounded-md p-3 mr-3 w-1/6">
+            <div className="md:flex grid grid-cols-2 md:grid-cols-2 gap-1 m-auto">
+              <div className="grid place-content-center border-2 border-grey rounded-md p-2">
                 <span className="text-blue text-2xl font-bold">
                   {props.stats[0].base_stat}
                 </span>
                 <br />
                 HP
               </div>
-              <div className="flex-initial grid place-content-center border-2 border-grey rounded-md p-3 mr-3 w-1/6">
+              <div className="grid place-content-center border-2 border-grey rounded-md p-2">
                 <span className="text-blue text-2xl font-bold">
                   {props.stats[1].base_stat}
                 </span>
                 <br />
                 Attack
               </div>
-              <div className="flex-initial grid place-content-center border-2 border-grey rounded-md p-3 mr-3 w-1/6">
+              <div className="grid place-content-center border-2 border-grey rounded-md p-2">
                 <span className="text-blue text-2xl font-bold">
                   {props.stats[2].base_stat}
                 </span>
                 <br />
                 Defense
               </div>
-              <div className="flex-initial grid place-content-center border-2 border-grey rounded-md p-3 mr-3 w-1/6">
+              <div className="grid place-content-center border-2 border-grey rounded-md p-2">
                 <span className="text-blue text-2xl font-bold">
                   {props.stats[3].base_stat}
                 </span>
                 <br />
                 Special Attack
               </div>
-              <div className="flex-initial grid place-content-center border-2 border-grey rounded-md p-3 mr-3 w-1/6">
+              <div className="grid place-content-center border-2 border-grey rounded-md p-2">
                 <span className="text-blue text-2xl font-bold">
                   {props.stats[4].base_stat}
                 </span>
                 <br />
                 Special Defense
               </div>
-              <div className="flex-initial grid place-content-center border-2 border-grey rounded-md p-3 mr-3 w-1/6">
+              <div className="grid place-content-center border-2 border-grey rounded-md p-2">
                 <span className="text-blue text-2xl font-bold">
                   {props.stats[5].base_stat}
                 </span>
@@ -146,9 +148,9 @@ function ModalInfo(props) {
           </div>
           <div className="grid place-content-center mt-10">
             <h3 className="text-dark-blue font-bold text-2xl mb-6">Sprites</h3>
-            <div className="flex">
+            <div className="md:flex grid grid-cols-2 md:grid-cols-2 gap-1 m-auto">
               {props.sprites.front_default ? (
-                <div className="flex-initial grid place-content-center border-2 border-grey rounded-md p-3 mr-3">
+                <div className="grid place-content-center border-2 border-grey rounded-md p-2">
                   <img
                     src={props.sprites.front_default}
                     alt="Not found"
@@ -167,7 +169,7 @@ function ModalInfo(props) {
                 </div>
               ) : null}
               {props.sprites.front_female ? (
-                <div className="flex-initial grid place-content-center border-2 border-grey rounded-md p-3 mr-3">
+                <div className="grid place-content-center border-2 border-grey rounded-md p-2">
                   <img
                     src={props.sprites.front_female}
                     alt={props.name}
@@ -182,7 +184,7 @@ function ModalInfo(props) {
                 </div>
               ) : null}
               {props.sprites.front_shiny ? (
-                <div className="flex-initial grid place-content-center border-2 border-grey rounded-md p-3 mr-3">
+                <div className="grid place-content-center border-2 border-grey rounded-md p-2">
                   <img
                     src={props.sprites.front_shiny}
                     alt={props.name}
@@ -201,7 +203,7 @@ function ModalInfo(props) {
                 </div>
               ) : null}
               {props.sprites.front_shiny_female ? (
-                <div className="flex-initial grid place-content-center border-2 border-grey rounded-md p-3 mr-3">
+                <div className="grid place-content-center border-2 border-grey rounded-md p-2">
                   <img
                     src={props.sprites.front_shiny_female}
                     alt={props.name}
